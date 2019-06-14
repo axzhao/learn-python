@@ -142,3 +142,85 @@ def exampleReprAndStr():
     >>> objs
     [2, 3]
     """
+
+
+class Commuter:
+    def __init__(self, val):
+        self.val = val
+
+    def __add__(self, other):
+        print('add', self.val, other)
+        return self.val + other
+
+    def __radd__(self, other):
+        print('radd', self.val, other)
+        return other + self.val
+
+
+class Commuter2:
+    def __init__(self, val):
+        self.val = val
+
+    def __add__(self, other):
+        if isinstance(other, Commuter2): other = other.val
+        return Commuter2(self.val + other)
+
+    def __radd__(self, other):
+        return Commuter2(other + self.val)
+
+    def __str__(self):
+        return '<Commuter2: %s>' % self.val
+
+
+def exampleCommuter():
+    """
+    >>> from magic_method3 import *
+    >>> x = Commuter(88)
+    >>> y = Commuter(99)
+    >>> x + 1
+    add 88 1
+    89
+    >>> 1 + y
+    radd 99 1
+    100
+    >>> x + y # instance + instance, triggers __radd__
+    add 88 <magic_method3.Commuter object at 0x105d645c0> 
+    radd 99 88
+    187
+    >>> x = Commuter2(88)
+    >>> y = Commuter2(99)
+    >>> print(x+10)
+    <Commuter2: 98>
+    >>> print(10+y)
+    <Commuter2: 109>
+    >>> z = x+y  # not nested: doesn't recur to __radd__
+    >>> print(z)
+    <Commuter2: 187>
+    >>> print(z+10)
+    <Commuter2: 197>
+    >>> print(z+z)
+    <Commuter2: 374>
+    """
+
+
+class Number:
+    def __init__(self, val):
+        self.val = val
+
+    def __iadd__(self, other):  # explicit: x += y
+        self.val += other
+        return self  # usually returns self
+
+    def __add__(self, other):  # fallback: x = (x+y)
+        return Number(self.val + other)  # propagates class type
+
+
+def exampleNumber():
+    """
+    >>> from magic_method3 import *
+    >>> x = Number(5)
+    >>> x += 1
+    >>> x += 1
+    >>> x.val
+    7
+    """
