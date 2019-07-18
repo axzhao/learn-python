@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 # _*_ coding: utf-8 _*_
 
+import numbers
+
+isinstance(1.2, numbers.Number)  # True
+isinstance(1.2, numbers.Real)  # True
+isinstance(True, numbers.Integral)  # True
+1.0 == True  # True
+
+# 集合元素所采用的不可变规则与字典的键相同，对于数字遵循数字比较规则
+set([1, 1.0])  # {1}
+
 
 def exampleFloat():
     """
@@ -18,6 +28,7 @@ def exampleFloat():
     2 2 2
     """
 
+
 def exampleNumeric():
     """
     >>> a = 6
@@ -27,6 +38,7 @@ def exampleNumeric():
     100,40,1000000
     """
 
+
 def exampleChainedComparisions():
     """
     >>> x, y, z = 1, 2, 3
@@ -35,6 +47,7 @@ def exampleChainedComparisions():
     >>> print(1==2<3, 1==2 and 2<3)
     False False 
     """
+
 
 def exampleDivide():
     """
@@ -52,6 +65,7 @@ def exampleDivide():
     >>> math.trunc(-2.5)
     -2
     """
+
 
 def exampleDecimal():
     """
@@ -71,12 +85,14 @@ def exampleDecimal():
     Decimal('0.0')
     """
 
+
 def exampleFraction():
     """
     >>> from fractions import Fraction
     >>> print(Fraction(1,3))
     1/3
     """
+
 
 def exampleConv():
     """
@@ -96,7 +112,7 @@ def exampleConv():
     Fraction(5, 3)
     """
 
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-
