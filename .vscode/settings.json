@@ -1,7 +1,7 @@
 {
-    "python.pythonPath": "/Users/Dev/.local/share/virtualenvs/vscode_python-QsomlZgQ/bin/python",
+    "python.pythonPath": "/Users/AX/.local/share/virtualenvs/vscode_python-UD3sIADC/bin/python",
     "editor.formatOnSave": true,
     "python.linting.enabled": true,
     "python.linting.lintOnSave": true,
-    "python.formatting.provider": "yapf",
+    "python.formatting.provider": "autopep8",
 }
