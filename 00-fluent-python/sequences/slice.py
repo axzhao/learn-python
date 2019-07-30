@@ -35,3 +35,7 @@ if __name__ == "__main__":
     # l[2:5] = 100
     l[2:5] = [100]
     print(l)
+
+    l = [28, 14, '28', 5, '9', '1', 0, 6, '23', 19]
+    sorted(l, key=int)
+    sorted(l, key=str)
