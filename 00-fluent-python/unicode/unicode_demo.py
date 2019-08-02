@@ -2,6 +2,16 @@
 # _*_ coding: utf-8 _*_
 
 if __name__ == "__main__":
+
+    cafe = bytes('café', encoding='utf_8')
+    print(cafe)
+    print(cafe[0])
+    print(cafe[:1])
+
+    cafe_arr = bytearray(cafe)
+    print(cafe_arr)
+    print(cafe_arr[-1:])
+
     city = '哈！'
     print(city.encode('utf8'))  # b'\xe5\x93\x88\xef\xbc\x81'
     # \xff\xfe BOM，字节序标记 byte-order mark，指明编码时使用Intel CPU的小字节序
@@ -103,3 +113,13 @@ if __name__ == "__main__":
     pi_name_str = pi_name_bytes.decode('ascii', 'surrogateescape')
     print(pi_name_str)
     print(pi_name_str.encode('ascii', 'surrogateescape'))
+
+    # 规范化Unicode字符串
+    s1 = 'café'
+    s2 = 'cafe\u0301'
+    print(len(s1), len(s2))
+    from unicodedata import normalize
+    print(len(normalize('NFC', s1)), len(normalize('NFC', s2)))
+    print(len(normalize('NFD', s1)), len(normalize('NFD', s2)))
+    print(normalize('NFC', s1) == normalize('NFC', s2))
+    print(normalize('NFD', s1) == normalize('NFD', s2))
