@@ -10,10 +10,17 @@ class Vector2d:
     typecode = 'd'
 
     def __init__(self, x, y):
-        self.x = float(x)
+        self.x = float(x) # 尽早捕获错误
         self.y = float(y)
 
-    def __iter__(self):
+    @classmethod
+    def frombytes(cls, octets):
+        typecode = chr(octets[0])
+        memv= memoryview(octets[1:]).cast(typecode)
+        return cls(*memv)
+
+    def __iter__(self): # 可迭代对象，方便拆包
+        # return yield self.x; yield self.y
         return (i for i in (self.x, self.y))
 
     def __repr__(self):
@@ -34,3 +41,9 @@ class Vector2d:
 
     def __bool__(self):
         return bool(abs(self))
+
+    def __format__(self, fmt_spec=''):
+        components = (format(c, fmt_spec) for c in self)
+        return '({}, {})'.format(*components)
+
+        
