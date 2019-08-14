@@ -346,7 +346,7 @@ class Vector:
 
     def __mul__(self, scalar):
         if isinstance(scalar, numbers.Real):
-            return Vector(n * scalar for n in self)
+            return Vector(n * scalar for n in self)  # 生成器表达式
         else:
             return NotImplemented
 

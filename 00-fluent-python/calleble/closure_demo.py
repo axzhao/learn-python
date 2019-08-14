@@ -43,6 +43,23 @@ def make_averager2():
         return total / count
     return averager
 
+# way 4
+# 好处是，total和count声明为局部变量即可，无需使用实例属性或闭包在多次调用之间保持上下文。
+
+
+def averager4():
+    """
+    仅当调用方在协程上调用.close()方法，或者没有对协程的引用而被垃圾回收程序回收时，这个协程才会终止。
+    """
+    total = 0.0
+    count = 0
+    average = None
+    while True:
+        term = yield average
+        total += term
+        count += 1
+        average = total/count
+
 
 if __name__ == "__main__":
     avg = Averager()
@@ -59,3 +76,9 @@ if __name__ == "__main__":
     print(avg2.__code__.co_freevars)
     print(avg2.__closure__)
     print(avg2.__closure__[0].cell_contents)
+
+    coro_avg = averager4()
+    next(coro_avg)
+    coro_avg.send(10)
+    coro_avg.send(30)
+    coro_avg.send(5)
