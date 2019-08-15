@@ -34,3 +34,21 @@ $ nginx
 $ nginx -s reload
 ```
 `http://localhost:8001/flags/ad/ad.gif`
+
+## Toxiproxy 模拟网络条件的框架
+
+```
+$ brew tap shopify/shopify
+$ brew install toxiproxy 
+```
+
+In One terminal
+> $ toxiproxy-server
+
+In another terminal  
+1. Created new proxy nginx_flags_delay     
+2. Added downstream latency toxic 'latency_downstream' on proxy 'nginx_flags_delay'  
+> $ toxiproxy-cli create nginx_flags_delay -l localhost:8002 -u localhost:8001   
+> $ toxiproxy-cli toxic add nginx_flags_delay -t latency -a latency=500 
+
+`http://localhost:8002/flags/ad/ad.gif`
