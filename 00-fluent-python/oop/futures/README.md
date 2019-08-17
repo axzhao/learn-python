@@ -52,3 +52,11 @@ In another terminal
 > $ toxiproxy-cli toxic add nginx_flags_delay -t latency -a latency=500 
 
 `http://localhost:8002/flags/ad/ad.gif`
+
+## Python3
+
+```
+python3 flags.py
+python3 flags_threadpool.py
+python3 flags_asyncio.py
+```

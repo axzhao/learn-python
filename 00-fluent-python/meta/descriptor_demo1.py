@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 # _*_ coding: utf-8 _*_
 
+"""
+
+对descriptor_demo 的改进，自动获取存储属性的名称
+
+"""
+
 
 def quantity():
     """

@@ -15,10 +15,14 @@ def download_one(cc):
 
 
 def download_many(cc_list):
+    # way 1
     workers = min(MAX_WORKERS, len(cc_list))
     # executor.__exit__方法会调用executor.shutdown(wait=True)方法，会在所有线程完成前阻塞线程
     with futures.ThreadPoolExecutor(workers) as executor:
         res = executor.map(download_one, sorted(cc_list))
+
+    # way 2
+    # with futures.ProcessPoolExecutor() as executor:
 
     return len(list(res))  # 如果有线程抛出异常，异常会在这里抛出。这与隐式调用next()函数从迭代器中获取相应的返回值一样
 

@@ -32,15 +32,15 @@ if __name__ == "__main__":
     c.__dict__['prop'] = 'foo'
     print(vars(c))
     print(c.prop)
-    C.prop = 'baz'
-    print(c.prop)
+    C.prop = 'baz'  # 覆盖特性，销毁特性对象
+    print(c.prop)  # 现在获取的就是实例属性了，因为C.prop已经不是特性是，因此不会再覆盖obj.prop
 
     print(c.data)
     print(C.data)
-    C.data = property(lambda self: 'the "data" prop value')
-    print(c.data)
-    del C.data
+    C.data = property(lambda self: 'the "data" prop value')  # 添加特性
+    print(c.data)  # 特性
+    del C.data  # 删除特性
     try:
-        print(c.data)
+        print(c.data)  # 恢复原样
     except AttributeError:
         print('AttributeError')

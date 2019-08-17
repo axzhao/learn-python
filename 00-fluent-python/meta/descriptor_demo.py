@@ -2,7 +2,12 @@
 # _*_ coding: utf-8 _*_
 
 
+import collections
+
+
 class Quantity:
+    """把quantity特性工厂函数重构成Quantity描述符类    
+    """
 
     def __init__(self, storage_name):
         self.storage_name = storage_name  # 托管实例中存储值的属性的名称
@@ -11,7 +16,7 @@ class Quantity:
         if value > 0:
             # 如果使用内置的setattr函数，会再次触发dunder-set方法，导致无限递归
             # 管理实例属性的描述符应该把值存在托管实例中
-            instance.__dict__[self.storage_name] = value
+            instance.__dict__[self.storage_name] = value + 10
         else:
             raise ValueError('value must be > 0')
 
@@ -27,3 +32,14 @@ class LineItem:
 
     def subtotal(self):
         return self.weight * self.price
+
+
+if __name__ == "__main__":
+    l = LineItem('xx', 1, 2)
+    print(l.__dict__)
+    print(LineItem.__dict__)
+    print(l.weight)
+    print(LineItem.weight)
+    print(l.__class__.weight)
+    l.__dict__["weight"] = 1
+    print(l.__dict__["weight"])  # 1
