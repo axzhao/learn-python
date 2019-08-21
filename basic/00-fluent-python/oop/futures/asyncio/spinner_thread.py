@@ -7,21 +7,13 @@ import time
 import sys
 
 
-class Signal:
-    go = True  # 用于从外部控制线程
-
-
-def spin(msg, signal):
-    write, flush = sys.stdout.write, sys.stdout.flush
-    for char in itertools.cycle('\/-\\'):
+def spin(msg, done):
+    for char in itertools.cycle('|/-\\'):
         status = char + ' ' + msg
-        write(status)
-        flush()
-        write('\x08' * len(status))  # \x08 退格符
-        time.sleep(.1)
-        if not signal.go:
+        print(status, end='\r')
+        if done.wait(.1):
             break
-    write(' ' * len(status) + '\x08' * len(status))
+    print(' ' * len(status), end='\r')
 
 
 def slow_function():
@@ -31,12 +23,12 @@ def slow_function():
 
 
 def supervisor():  # 从属线程
-    signal = Signal()
-    spinner = threading.Thread(target=spin, args=('thinking!', signal))
+    done = threading.Event()
+    spinner = threading.Thread(target=spin, args=('thinking!', done))
     print('spinner object:', spinner)
     spinner.start()  # 启动从属线程
     result = slow_function()  # 阻塞主线程，同时显示动画
-    signal.go = False
+    done.set()
     spinner.join()  # 等待spinner线程结束
     return result
 

@@ -4,4 +4,8 @@
     "python.linting.enabled": true,
     "python.linting.lintOnSave": true,
     "python.formatting.provider": "autopep8",
+    // whitelist numpy to remove lint errors
+    "python.linting.pylintArgs": [
+        "--extension-pkg-whitelist=numpy"
+    ]
 }
