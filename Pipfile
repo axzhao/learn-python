@@ -15,7 +15,10 @@ pandas = "*"
 matplotlib = "*"
 numpy = "*"
 jupyter = "*"
-pipfile = "*"
+pyhive = "*"
+thift = "*"
+sasl = "*"
+thrift-sasl = "*"
 
 [requires]
 python_version = "3.7"
