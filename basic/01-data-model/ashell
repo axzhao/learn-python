@@ -1,0 +1,4 @@
+#!/Users/AX/.local/share/virtualenvs/vscode_python-UD3sIADC/bin/python
+print("可执行脚本")
+print("chmod +x ashell")
+print("$ ashell")

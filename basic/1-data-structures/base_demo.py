@@ -15,10 +15,20 @@ except TypeError:
 
 # 列表
 try:
-    l = []
-    l[99] = 'spam'
+    l = [] # 还不知道列表内容使用None l = [None] * 100
+    l[99] = 'spam' 
 except IndexError:
     print("在列表末尾外的偏移赋值是非法的")
+
+# 拷贝
+# 没有限制条件的分片表达式能够复制序列 l[:]，顶层复制
+# 字典copy方法能够复制字典 d.copy()，顶层复制
+# 有些内置函数能够生成拷贝 list(l)，顶层复制
+# copy标准库模块能够生成完整拷贝，copy顶层复制，deepcopy 深层嵌套复制
+
+# enumerate
+for offset, item in enumerate("123"):
+    print(offset, item)
 
 # %%
 
@@ -164,6 +174,21 @@ t = (1, 2, 3)
 
 """
 
+((a, b), c) = ("SP", "AM")
+print(a,b,c)
+red, green, blue = range(3)
+print(red, blue)
+
+a, *b = "spam"
+a, *b, c = "spam"
+seq = [1,2,3,4]
+a,b,c,*d = seq
+print(a,b,c,d)
+a, b, *e, c,d = seq
+print(a, b, c,d,e)
+*a, = seq # *****
+print(a)
+
 # %%
 
 """ 列表 list
@@ -213,6 +238,30 @@ print(l)
 
 print(sorted(l, key=str.lower, reverse=True)) # 非原地修改sort
 
+l = [4,5,6]
+x = l * 4
+y = [l] * 4
+print(x, y)
+l[0] = 0
+print(x, y) # 重复，合并，分片只是在复制操作对象的顶层
+
+a = b = []
+b.append(42)
+print(a, b)
+a = []
+b = []
+b.append(42)
+print(a, b)
+
+l = [1,2]
+m = l
+l = l + [3,4]
+print(m, l)
+l = [1,2]
+m = l
+l += [3,4]
+print(l, m)
+
 # list comprehension
 
 # %%
@@ -246,6 +295,17 @@ d = {'a':1, 'b':2, 'c':3}
 k = d.keys()
 print(k | {'x': 4}, k | {'x'})
 
+# 比较
+d1 = {'a':1, 'b':2}
+d2 = {'a':1, 'b':2}
+print(d1 == d2)
+try:
+    print(d1 < d2)
+except TypeError:
+    print("unorderable")
+
+print(list(d1.items()), sorted(d1.items()))
+print(sorted(d1.items()) == sorted(d2.items()))
 # %%
 
 """ 集合 set, fronzenset
@@ -288,4 +348,46 @@ print(x)
 print(x.intersection(y), x.union(y), x.issubset(y))
 
 # %%
+
+""" 文件 file
+
+文本文件都采用字符串的形式
+eval：把字符串当作可执行程序代码，任何表达式。
+
+pickle: 数据格式化和解析工具，python对象。
+shelve: 用pickle把python对象存放到按键访问的文件系统中。
+struct: 构造饼解析打包的二进制数据，另一个数据转换工具，能够把文件中的字符串解析为二进制数据。
+
+shell 命令流： os.popen, subprocess.Popen
+网络通信，同步进程，文件类对戏那个：sockets, pipes, FIFO文件
+
+"""
+
+import pickle
+f = open("datafile.pkl", "wb")
+pickle.dump([1,2,3], f)
+f.close()
+ff = open("datafile.pkl", "rb")
+e = pickle.load(ff)
+print(e)
+ff.close()
+
+with open("datafile.pkl", "wb") as f, open("datafile.pkl", "rb") as ff:
+    pickle.dump([1,2,3], f)
+    f.close()
+    e = pickle.load(ff)
+    print(e)
+    ff.close()
+
+import struct
+f = open("data.bin", "wb")
+data = struct.pack(">i4sh", 7, "spam", 8)
+print(data)
+f.write(data)
+f.close()
+f = open("data.bin", "rb")
+data = f.read()
+print(data)
+values = struct.unpack(">i4sh", data)
+print(values)
 

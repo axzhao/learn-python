@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b970856d413002ed8429cd3eecee5b31c002c922a29ccc5e30f520af7542157a"
+            "sha256": "c7c19e328b6f131f207aa1ff478a13b03372058f2340753d915258ca04ac6531"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -353,6 +353,13 @@
             ],
             "version": "==0.7.5"
         },
+        "pipfile": {
+            "hashes": [
+                "sha256:f7d9f15de8b660986557eb3cc5391aa1a16207ac41bc378d03f414762d36c984"
+            ],
+            "index": "pypi",
+            "version": "==0.0.2"
+        },
         "prometheus-client": {
             "hashes": [
                 "sha256:71cd24a2b3eb335cb800c7159f423df1bd4dcd5171b234be15e3f31ec9f622da"
@@ -391,7 +398,6 @@
         },
         "pyrsistent": {
             "hashes": [
-                "sha256:156d6adc2e276267dc0385a2d1be0a00cee74d01791a70e25204b30782316273",
                 "sha256:34b47fa169d6006b32e99d4b3c4031f155e6e68ebcc107d6454852e8e0ee6533"
             ],
             "version": "==0.15.4"
@@ -504,6 +510,13 @@
                 "sha256:b694b3d9288dbd81685c5d2e7140b81365d46c29f5db4bc659de5aa6b98780f8"
             ],
             "version": "==0.4.2"
+        },
+        "toml": {
+            "hashes": [
+                "sha256:229f81c57791a41d65e399fc06bf0848bab550a9dfd5ed66df18ce5f05e73d5c",
+                "sha256:235682dd292d5899d361a811df37e04a8828a5b1da3115886b73cf81ebc9100e"
+            ],
+            "version": "==0.10.0"
         },
         "tornado": {
             "hashes": [

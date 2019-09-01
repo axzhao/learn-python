@@ -15,6 +15,7 @@ pandas = "*"
 matplotlib = "*"
 numpy = "*"
 jupyter = "*"
+pipfile = "*"
 
 [requires]
 python_version = "3.7"

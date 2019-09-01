@@ -43,7 +43,7 @@ x[4,...,5,:] to x[4,:,:,5,:].
 import numpy as np
 
 print(np.version)
-print(np.__version__)
+# print(np.__version__)
 np.show_config()
 
 print(0 * np.nan)
@@ -55,6 +55,12 @@ print(0.3 == 3 * 0.1)
 
 # python3 -c "import numpy; numpy.info(numpy.random.gamma)"
 
+
+a = np.arange(1,10).reshape(3,3)
+m = [[1,2,3],[4,5,6],[7,8,9]]
+print(a[1][1] == m[1][1])
+print(np.diag(a) == [m[i][i] for i in [0,1,2]])
+print(np.sum(a, axis=1) == [sum(row) for row in m])
 
 #%%
 """ 生成函数 """
