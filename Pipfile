@@ -20,6 +20,8 @@ thift = "*"
 sasl = "*"
 thrift-sasl = "*"
 pyspark = "*"
+pypinyin = "*"
+gevent = "*"
 
 [requires]
 python_version = "3.7"

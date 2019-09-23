@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # _*_ coding: utf-8 _*_
 
-
 from collections import namedtuple
 
 Result = namedtuple('Result', 'count average')
@@ -14,23 +13,28 @@ def averager():
     count = 0
     average = None
     while True:
-        term = yield  # main函数中的客户代码发送的各个值绑定到这里term变量上
-        if term is None:  # 如果没有，使用yield from 调用这个协程的生成器会永远阻塞
+        # main 函数发送数据到这里
+        print("in averager, before yield")
+        term = yield
+        if term is None:  # 终止条件
             break
         total += term
         count += 1
         average = total/count
-        return Result(count, average)  # 返回的result会成为grouper函数中yield from表达式的值
+
+    print("in averager, return result")
+    return Result(count, average)  # 返回的Result 会成为grouper函数中yield from表达式的值
+
 
 # 委派生成器
-
-
 def grouper(results, key):
-    while True:  # 每次新建一个averager实例，每个实例都是作为协程使用的生成器对象
-        # grouper发送的每个值都会经由 yield from 处理，通过管道传给averager实例
+     # 这个循环每次都会新建一个averager 实例，每个实例都是作为协程使用的生成器对象
+    while True:
+        print("in grouper, before yield from averager, key is ", key)
         results[key] = yield from averager()
+        print("in grouper, after yield from, key is ", key)
 
-# 客户端代码，即调用方
+# 调用方
 
 
 def main(data):
@@ -47,18 +51,25 @@ def main(data):
     """
     results = {}
     for key, values in data.items():
+        # group 是调用grouper函数得到的生成器对象
         group = grouper(results, key)
-        next(group)  # 预激group协程
+        print("\ncreate group: ", group)
+        next(group)  # 预激 group 协程。
+        print("pre active group ok")
         for value in values:
+            # 把各个value传给grouper 传入的值最终到达averager函数中；
+            # grouper并不知道传入的是什么，同时grouper实例在yield from处暂停
+            print("send to %r value %f now" % (group, value))
             group.send(value)
-        # 重要 把None传入grouper，导致当前的averager实例终止，也让grouper继续运行，再创建一个averager实例，处理下一组值
+        # 把None传入groupper，传入的值最终到达averager函数中，导致当前实例终止。然后继续创建下一个实例。
+        # 如果没有group.send(None)，那么averager子生成器永远不会终止，委派生成器也永远不会在此激活，也就不会为result[key]赋值
+        print("send to %r none" % group)
         group.send(None)
-    # print(results) # 如果要调试，去掉注释
+    print("report result: ")
     report(results)
 
+
 # 输出报告
-
-
 def report(results):
     for key, result in sorted(results.items()):
         group, unit = key.split(';')
@@ -67,10 +78,10 @@ def report(results):
 
 
 data = {
-    'girls;kg': [40.9, 38.5, 44.3, 42.2, 45.2, 41.7, 44.5, 38.0, 40.6, 44.5],
-    'girls;m': [1.6, 1.51, 1.4, 1.3, 1.41, 1.39, 1.33, 1.46, 1.45, 1.43],
-    'boys;kg': [39.0, 40.8, 43.2, 40.8, 43.1, 38.6, 41.4, 40.6, 36.3],
-    'boys;m': [1.38, 1.5, 1.32, 1.25, 1.37, 1.48, 1.25, 1.49, 1.46],
+    'girls;kg': [40, 41, 42, 43, 44, 54],
+    'girls;m': [1.5, 1.6, 1.8, 1.5, 1.45, 1.6],
+    'boys;kg': [50, 51, 62, 53, 54, 54],
+    'boys;m': [1.6, 1.8, 1.8, 1.7, 1.55, 1.6],
 }
 
 if __name__ == '__main__':
