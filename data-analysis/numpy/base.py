@@ -1,44 +1,10 @@
 #!/usr/bin/env python3
 # _*_ coding: utf-8 _*_
 
-"""
-NumPy: a multidimensional array object
-
-ndarray: n-dimensional arrays of homogeneous data types
--- fixed size at creation
--- same data type
-
-attributes of an ndarray object are:
--- ndarray.ndim：the number of axes (dimensions) of the array.
--- ndarray.shape：the dimensions of the array. 
--- ndarray.size：the total number of elements of the array. 
--- ndarray.dtype：an object describing the type of the elements in the array. 
--- ndarray.itemsize：the size in bytes of each element of the array. 
--- ndarray.data：the buffer containing the actual elements of the array. 
-
-
-np.set_printoptions(threshold=sys.maxsize)
-
-
-python3 -c "import numpy; numpy.info(numpy.add)"
-
-
-array creation 
--- array, zeros, ones, empty, eye
--- arange, linespace, 
--- random
-
-print("%d bytes" % (Z.size * Z.itemsize))
-
-x[1,2,...] is equivalent to x[1,2,:,:,:],
-x[...,3] to x[:,:,:,:,3] and
-x[4,...,5,:] to x[4,:,:,5,:].
-
-"""
-
 #%%
 """ numpy """
 
+np.newaxis
 
 import numpy as np
 
