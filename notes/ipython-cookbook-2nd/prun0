@@ -1,0 +1,16 @@
+         2829 function calls (2527 primitive calls) in 0.075 seconds
+
+   Ordered by: cumulative time
+   List reduced from 58 to 10 due to restriction <10>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.075    0.075 {built-in method builtins.exec}
+        1    0.000    0.000    0.075    0.075 <string>:5(<module>)
+   354/52    0.001    0.000    0.042    0.001 {built-in method numpy.core._multiarray_umath.implement_array_function}
+        1    0.000    0.000    0.035    0.035 <string>:9(<listcomp>)
+       50    0.000    0.000    0.035    0.001 <__array_function__ internals>:2(histogram)
+       50    0.002    0.000    0.034    0.001 histograms.py:670(histogram)
+        1    0.012    0.012    0.030    0.030 <ipython-input-4-9762414cb3f6>:3(step)
+       50    0.000    0.000    0.023    0.000 <__array_function__ internals>:2(sort)
+       50    0.000    0.000    0.023    0.000 fromnumeric.py:826(sort)
+       50    0.021    0.000    0.021    0.000 {method 'sort' of 'numpy.ndarray' objects}
